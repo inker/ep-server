@@ -9,11 +9,12 @@
     "compression": "^1.7.1",
     "cors": "^2.8.4",
     "express": "^4.16.2",
-    "forever": "^0.15.3",
     "pg": "^7.4.0",
     "uuid": "^3.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "forever": "^0.15.3"
+  },
   "scripts": {
     "start": "forever forever/prod.json",
     "start:dev": "forever forever/dev.json"
