@@ -1,0 +1,5 @@
+{
+  "workingDir": ".",
+  "script": "index.js",
+  "colors": true
+}

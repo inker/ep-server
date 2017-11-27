@@ -1,0 +1,34 @@
+{
+  "name": "easypay-server",
+  "version": "1.0.0",
+  "description": "EasyPay test task",
+  "main": "index.html",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "forever": "^0.15.3",
+    "pg": "^7.4.0",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "forever forever/prod.json",
+    "start:dev": "forever forever/dev.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inker/draw.git"
+  },
+  "keywords": [
+    "easypay"
+  ],
+  "author": "Anton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inker/draw/issues"
+  },
+  "homepage": "https://github.com/inker/draw#readme"
+}
