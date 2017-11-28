@@ -1,12 +1,12 @@
 {
   "server": {
-    "host": "localhost",
     "port": 8881
   },
   "redis": {
     "port": 6379
   },
   "pg": {
+    "port": 5432,
     "user": "easypay-user",
     "database": "easypay-db",
     "password": "1111"

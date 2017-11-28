@@ -1,4 +1,6 @@
+const chalk = require('chalk').default
+
 module.exports = () => (req, res, next) => {
-  console.log(new Date(), req.body)
+  console.log(chalk.gray(`[${new Date()}]`), '\n', req.body)
   next()
 }

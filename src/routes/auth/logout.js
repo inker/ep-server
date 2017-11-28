@@ -6,10 +6,9 @@ module.exports = async (req, res) => {
     await db.redis.delAsync(`user-session-${auth.token}`)
   } catch (err) {
     console.error(err)
-    res.send({
+    return res.send({
       error: 'DB_ERROR',
     })
-    return    
   }
 
   res.send({

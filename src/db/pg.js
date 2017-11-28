@@ -1,6 +1,9 @@
 const { Client } = require('pg')
+const chalk = require('chalk').default
 
 const config = require('../../config.json')
+
+const HW = 'Hello world!'
 
 function tryReconnect(err) {
   if (err) {
@@ -14,12 +17,14 @@ async function connect() {
   client.on('error', tryReconnect)
   client.on('end', tryReconnect)
 
-  console.log('connecting to Postgres')
+  console.log('Connecting to Postgres')
   await client.connect()
 
-  const res = await client.query('SELECT $1::text as message', ['Hello world!'])
-  console.log(res.rows[0].message) // Hello world!
-  console.log('Postgres started')
+  const res = await client.query('SELECT $1::text as message', [HW])
+  if (res.rows[0].message !== HW) {
+    throw new Error('Something is wrong with Postgres')
+  }
+  console.log(chalk.green('Postgres started'), config.pg.port)
   return client
 }
 

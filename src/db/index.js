@@ -1,3 +1,5 @@
+const chalk = require('chalk').default
+
 const storages = [
   'pg',
   'redis',
@@ -11,4 +13,5 @@ exports.start = async () => {
     const key = storages[i]
     exports[key] = await promises[i]
   }
+  console.log(chalk.green('All databases started'))
 }

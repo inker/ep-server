@@ -4,13 +4,9 @@ const http = require('http')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const chalk = require('chalk').default
 
-const {
-  server: {
-    host,
-    port,
-  },
-} = require('../config.json')
+const { port } = require('../config.json').server
 
 const logger = require('./middlewares/logger')
 
@@ -37,7 +33,7 @@ app.use(express.static(`${__dirname}/client`))
 const server = http.createServer(app)
 
 db.start().then(() => {
-  server.listen(port, host, () => {
-    console.log('server is running on', `${host}:${port}`)
+  server.listen(port, () => {
+    console.log(chalk.green('Server is running'), port)
   })
 }).catch(console.error)

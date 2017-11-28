@@ -1,5 +1,6 @@
-const bluebird = require('bluebird')
 const redis = require('redis')
+const bluebird = require('bluebird')
+const chalk = require('chalk').default
 
 const { port } = require('../../config.json').redis
 
@@ -15,7 +16,7 @@ module.exports = () =>
     client.on('error', reject)
     client.on('ready', () => {
       resolve(client)
-      console.log('Redis started', port)
+      console.log(chalk.green('Redis started'), port)
     })
   })
 

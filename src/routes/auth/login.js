@@ -8,13 +8,13 @@ module.exports = async (req, res) => {
 
   let rows
   try {
-    const res = await db.pg.query(`SELECT * FROM users WHERE username='${auth.login}'`)
-    rows = res.rows
+    const result = await db.pg.query(`SELECT * FROM users WHERE username='${auth.login}'`)
+    rows = result.rows
   } catch (err) {
     console.error(err)
     return res.send({
       error: 'DB_ERROR',
-    })    
+    })
   }
 
   if (rows.length === 0) {
