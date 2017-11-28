@@ -3,6 +3,12 @@
     "host": "localhost",
     "port": 8881
   },
-  "requestTimeout": 120000,
-  "webpackDevServerPort": 9080
+  "redis": {
+    "port": 6379
+  },
+  "pg": {
+    "user": "easypay-user",
+    "database": "easypay-db",
+    "password": "1111"
+  }
 }
