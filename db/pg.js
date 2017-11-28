@@ -8,4 +8,5 @@ module.exports = async () => {
   // const res = await client.query('SELECT $1::text as message', ['Hello world!'])
   // console.log(res.rows[0].message) // Hello world!
   // await client.end()
+  console.log('Postgrest started')
 }

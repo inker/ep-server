@@ -32,7 +32,7 @@ app.use(express.static(`${__dirname}/client`))
 
 const server = http.createServer(app)
 
-db().then(() => {
+db.start().then(() => {
   server.listen(port, host, () => {
     console.log('server is running on', `${host}:${port}`)
   })
