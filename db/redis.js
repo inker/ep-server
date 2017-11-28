@@ -9,7 +9,7 @@ module.exports = () =>
     const client = redis.createClient({
       port: 6379,
     })
-    
+
     client.on('error', reject)
     client.on('ready', () => {
       resolve(client)
