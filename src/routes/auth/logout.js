@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   } catch (err) {
     console.error(err)
     return res.send({
-      error: 'DB_ERROR',
+      error: 'SERVER_ERROR',
     })
   }
 
