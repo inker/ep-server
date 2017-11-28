@@ -4,8 +4,8 @@ const router = express.Router()
 
 const routes = [
   'add',
-  // 'remove',
-  // 'check',
+  'remove',
+  'check',
 ]
 
 for (const route of routes) {

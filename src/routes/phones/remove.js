@@ -1,8 +1,6 @@
-const isMobilePhone = require('validator/lib/isMobilePhone')
-
 const db = require('../../db')
 
-const INSERT_PHONE_NUMBER_QUERY = 'INSERT INTO phone_numbers (number) VALUES ($1);'
+const DELETE_PHONE_NUMBER_QUERY = 'DELETE FROM phone_numbers WHERE phone_numbers.number=$1;'
 
 module.exports = async (req, res) => {
   const { auth, data } = req.body
@@ -12,21 +10,19 @@ module.exports = async (req, res) => {
         error: 'PHONE_NUMBER_REQUIRED',
       })
     }
+
     const { phoneNumber } = data
-    if (!isMobilePhone(phoneNumber, 'any')) {
-      return res.send({
-        error: 'INVALID_PHONE_NUMBER',
-      })
-    }
-    const result = await db.pg.query({
-      text: INSERT_PHONE_NUMBER_QUERY,
+    const { rowCount } = await db.pg.query({
+      text: DELETE_PHONE_NUMBER_QUERY,
       values: [phoneNumber],
     })
-    console.log('res', result)
+    console.log('res', rowCount)
+    const sentData = {}
+    if (rowCount > 0) {
+      sentData.phoneNumber = phoneNumber
+    }
     res.send({
-      data: {
-        phoneNumber,
-      },
+      data: sentData,
     })
   } catch (err) {
     console.error(err)
