@@ -12,6 +12,8 @@ const {
   },
 } = require('../config.json')
 
+const logger = require('./middlewares/logger')
+
 const db = require('./db')
 
 const app = express()
@@ -24,6 +26,8 @@ app.use(require('compression')()) // should be first
 app.use(bodyParser.urlencoded({ extended: false })) // to support URL-encoded bodies
 app.use(bodyParser.json()) // to support JSON-encoded bodies
 app.use(cors())
+
+app.use(logger())
 
 app.use('/auth', require('./routes/auth'))
 app.use('/phone', require('./routes/phone'))

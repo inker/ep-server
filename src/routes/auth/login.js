@@ -4,7 +4,6 @@ const db = require('../../db')
 const generateToken = require('../../utils/generateToken')
 
 module.exports = async (req, res) => {
-  console.log('data', req.body)
   const { auth } = req.body
 
   let rows

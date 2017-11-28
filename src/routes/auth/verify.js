@@ -1,8 +1,6 @@
 const db = require('../../db')
 
 module.exports = async (req, res) => {
-  console.log('data', req.body)
-
   const { auth } = req.body
   if (!auth.token) {
     return res.send({
