@@ -19,8 +19,8 @@
     "forever": "^0.15.3"
   },
   "scripts": {
-    "start": "forever forever/prod.json",
-    "start:dev": "forever forever/dev.json"
+    "start:prod": "forever forever/prod.json",
+    "start": "forever forever/dev.json"
   },
   "repository": {
     "type": "git",

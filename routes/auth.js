@@ -14,10 +14,7 @@ const PASSWORD = '1234'
 const HASH = '$2a$10$RkPPOOI837gFVjjrDWpTv.qJUd8ytpiVZiD85B776cqflHmu4TeAe'
 
 router.post('/login', async (req, res) => {
-  hash(PASSWORD).then(console.log)
-  console.log('req', req)
-  const data = req.body
-  console.log('data', data)
+  console.log('data', req.body)
   const { auth } = req.body
   if (auth.login !== LOGIN) {
     res.status(200).send({
@@ -36,6 +33,7 @@ router.post('/login', async (req, res) => {
   try {
     await db.redis.setex(`user-session-${token}`, 86400, USER_ID)
   } catch (err) {
+    console.error(err)
     res.status(200).send({
       error: 'DB_ERROR',
     })
@@ -48,9 +46,18 @@ router.post('/login', async (req, res) => {
   })
 })
 
-router.post('/logout', (req, res) => {
-  const data = req.body
-  console.log('data', data)
+router.post('/logout', async (req, res) => {
+  console.log('data', req.body)
+  const { auth } = req.body
+  try {
+    await db.redis.del(`user-session-${auth.token}`)
+  } catch (err) {
+    console.error(err)
+    res.status(200).send({
+      error: 'DB_ERROR',
+    })
+    return    
+  }
   res.status(200).send({
     data: {},
   })
