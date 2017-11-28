@@ -26,7 +26,7 @@ app.use(cors())
 app.use(logger())
 
 app.use('/auth', require('./routes/auth'))
-app.use('/phone', require('./routes/phone'))
+app.use('/phones', require('./routes/phones'))
 
 app.use(express.static(`${__dirname}/client`))
 
