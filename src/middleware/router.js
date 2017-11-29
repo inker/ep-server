@@ -11,17 +11,14 @@ function sendServerError(res) {
   })
 }
 
-function defineRoute(route, methodsPath) {
-  const method = require(path.join(methodsPath, route))
-  const cb = (req, res) =>
+const getRouteHandler = (method) =>
+  (req, res) =>
     method(req.body).then(resData => {
       res.send(resData)
     }).catch(err => {
       console.error(err)
       sendServerError(res)
     })
-  router.post(route, cb)
-}
 
 module.exports = (routes, methodsPath) => {
   if (!routes) {
@@ -30,7 +27,9 @@ module.exports = (routes, methodsPath) => {
   for (const routeKey of Object.keys(routes)) {
     const methodNames = routes[routeKey]
     for (const methodName of methodNames) {
-      defineRoute(`/${routeKey}/${methodName}`, methodsPath)
+      const route = `/${routeKey}/${methodName}`
+      const method = require(path.join(methodsPath, route))
+      router.post(route, getRouteHandler(method))
     }
   }
   return router
