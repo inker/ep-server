@@ -25,5 +25,5 @@ exports.start = async () => {
     })
   })
   await Promise.all(promises)
-  console.log(chalk.green('All databases started'))
+  console.log(chalk.green('Connections to databases established'))
 }
