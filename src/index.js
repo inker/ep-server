@@ -25,7 +25,9 @@ const routes = {
     'add',
     'check',
     'remove',
+    // add more methods here
   ],
+  // add more routes here
 }
 
 const app = express()
@@ -40,7 +42,7 @@ app.use(permissions({
   exemptServices: 'auth',
 }))
 
-app.use(router(routes))
+app.use(router(routes, `${__dirname}`))
 
 app.use(express.static(`${__dirname}/client`))
 

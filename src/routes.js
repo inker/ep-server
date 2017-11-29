@@ -2,19 +2,30 @@ const express = require('express')
 
 const router = express.Router()
 
-module.exports = (routes) => {
+function defineRoute(route, methodsPath) {
+  const method = require(`${methodsPath}/methods/${route}`)
+  const cb = (req, res) =>
+    method(req.body).then(resData => {
+      res.send(resData)
+    }).catch(err => {
+      console.error(err)
+      res.send({
+        error: {
+          type: 'SERVER_ERROR',
+        },
+      })
+    })
+  router.post(route, cb)
+}
+
+module.exports = (routes, methodsPath) => {
   if (!routes) {
     throw new Error('Provide router object')
   }
-  for (const route of Object.keys(routes)) {
-    const methodNames = routes[route]
+  for (const routeKey of Object.keys(routes)) {
+    const methodNames = routes[routeKey]
     for (const methodName of methodNames) {
-      const method = require(`./methods/${route}/${methodName}`)
-      router.post(`/${route}/${methodName}`, (req, res) => {
-        return method(req.body).then(resData => {
-          res.send(resData)
-        })
-      })
+      defineRoute(`/${routeKey}/${methodName}`, methodsPath)
     }
   }
   return router

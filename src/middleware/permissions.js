@@ -8,7 +8,9 @@ const SELECT_PERMISSIONS_QUERY = `
   INNER JOIN permissions ON users_permissions.permission_id = permissions.id
   WHERE users.username = $1
 `
-
+/**
+ * @param {string[]} exemptServices - do not check for permissions when running these services
+ */
 module.exports = ({
   exemptServices,
 } = {}) => async (req, res, next) => {

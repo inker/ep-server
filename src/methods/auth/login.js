@@ -15,44 +15,35 @@ module.exports = async ({ auth }) => {
     }
   }
 
-  try {
-    const { rows } = await db.pg.query({
-      text: SELECT_USER_QUERY,
-      values: [auth.login],
-    })
-    if (rows.length === 0) {
-      return {
-        error: {
-          type: 'NO_SUCH_USER',
-        },
-      }
-    }
-
-    const row = rows[0]
-
-    const passwordIsCorrect = await bcrypt.compare(auth.password, row.password)
-    if (!passwordIsCorrect) {
-      return {
-        error: {
-          type: 'INCORRECT_PASSWORD',
-        },
-      }
-    }
-
-    const token = generateToken()
-
-    await db.redis.setexAsync(`user-session-${token}`, keyTimeout, row.id)
-    return {
-      data: {
-        token,
-      },
-    }
-  } catch (err) {
-    console.error(err)
+  const { rows } = await db.pg.query({
+    text: SELECT_USER_QUERY,
+    values: [auth.login],
+  })
+  if (rows.length === 0) {
     return {
       error: {
-        type: 'SERVER_ERROR',
+        type: 'NO_SUCH_USER',
       },
     }
+  }
+
+  const row = rows[0]
+
+  const passwordIsCorrect = await bcrypt.compare(auth.password, row.password)
+  if (!passwordIsCorrect) {
+    return {
+      error: {
+        type: 'INCORRECT_PASSWORD',
+      },
+    }
+  }
+
+  const token = generateToken()
+
+  await db.redis.setexAsync(`user-session-${token}`, keyTimeout, row.id)
+  return {
+    data: {
+      token,
+    },
   }
 }

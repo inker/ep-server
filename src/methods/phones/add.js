@@ -44,10 +44,6 @@ module.exports = async ({ data }) => {
       }
     }
 
-    return {
-      error: {
-        type: 'SERVER_ERROR',
-      },
-    }
+    throw err
   }
 }
