@@ -6,6 +6,13 @@ const generateToken = require('../../utils/generateToken')
 
 const SELECT_USER_QUERY = 'SELECT * FROM users WHERE username = $1;'
 
+async function createSession(userId) {
+  const token = generateToken()
+  const { keyTimeout } = config.redis.sessions
+  await db.redis.sessions.setexAsync(`user-session-${token}`, keyTimeout, userId)
+  return token
+}
+
 module.exports = async ({ auth }) => {
   if (!auth) {
     return {
@@ -38,10 +45,7 @@ module.exports = async ({ auth }) => {
     }
   }
 
-  const token = generateToken()
-
-  const { keyTimeout } = config.redis.sessions
-  await db.redis.sessions.setexAsync(`user-session-${token}`, keyTimeout, row.id)
+  const token = await createSession(row.id)
   return {
     data: {
       token,

@@ -44,7 +44,5 @@ module.exports = ({
     })
   }
 
-  req.permissions = rows.map(row => row[PERMISSION_NAME_COL_ALIAS])
-
   next()
 }
