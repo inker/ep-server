@@ -7,6 +7,9 @@ const storages = [
   'redis',
 ]
 
+/**
+ * @returns {Object} db object with clients
+ */
 exports.start = async () => {
   const promises = storages.map(storageName => {
     const o = {}
