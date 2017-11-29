@@ -14,14 +14,6 @@ async function createSession(userId) {
 }
 
 module.exports = async ({ auth }) => {
-  if (!auth) {
-    return {
-      error: {
-        type: 'NO_AUTH',
-      },
-    }
-  }
-
   const { rows } = await db.pg.main.query({
     text: SELECT_USER_QUERY,
     values: [auth.login],

@@ -14,19 +14,18 @@ const SELECT_PERMISSIONS_QUERY = `
 module.exports = ({
   exemptServices,
 } = {}) => async (req, res, next) => {
-  const pathTokens = req.path.split('/')
-  if (exemptServices && exemptServices.includes(pathTokens[1])) {
-    return next()
-  }
-
   const { auth } = req.body
-
   if (!auth) {
     return res.send({
       error: {
         type: 'NO_AUTH',
       },
     })
+  }
+
+  const pathTokens = req.path.split('/')
+  if (exemptServices && exemptServices.includes(pathTokens[1])) {
+    return next()
   }
 
   const { rows } = await db.pg.main.query({

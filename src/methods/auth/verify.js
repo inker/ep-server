@@ -3,14 +3,6 @@ const db = require('../../db')
 const SELECT_USER_ID_QUERY = 'SELECT id FROM users WHERE username = $1;'
 
 module.exports = async ({ auth }) => {
-  if (!auth) {
-    return {
-      error: {
-        type: 'NO_AUTH',
-      },
-    }
-  }
-
   if (!auth.token) {
     return {
       error: {
