@@ -11,7 +11,7 @@ const { port } = require('../config.json').server
 
 const logger = require('./middleware/logger')
 const permissions = require('./middleware/permissions')
-const router = require('./routes')
+const router = require('./middleware/router')
 
 const db = require('./db')
 
@@ -42,7 +42,7 @@ app.use(permissions({
   exemptServices: 'auth',
 }))
 
-app.use(router(routes, `${__dirname}`))
+app.use(router(routes, __dirname))
 
 app.use(express.static(`${__dirname}/client`))
 
