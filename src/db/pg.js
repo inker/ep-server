@@ -5,17 +5,20 @@ const config = require('../../config.json')
 
 const HW = 'Hello world!'
 
-function tryReconnect(err) {
+function tryReconnect(err, key, reconnectTimeout) {
   if (err) {
     console.error(err)
   }
-  setTimeout(connect, 3000)
+  if (typeof reconnectTimeout === 'number' && reconnectTimeout >= 0) {
+    setTimeout(() => connect(key), reconnectTimeout)
+  }
 }
 
-async function connect() {
-  const client = new Client(config.pg)
-  client.on('error', tryReconnect)
-  client.on('end', tryReconnect)
+async function connect(key) {
+  const { reconnectTimeout, ...instanceConfig } = config.pg[key]
+  const client = new Client(instanceConfig)
+  client.on('error', err => tryReconnect(err, key, reconnectTimeout))
+  client.on('end', () => tryReconnect(null, key, reconnectTimeout))
 
   console.log('Connecting to Postgres')
   await client.connect()
@@ -24,8 +27,17 @@ async function connect() {
   if (res.rows[0].message !== HW) {
     throw new Error('Something is wrong with Postgres')
   }
-  console.log(chalk.green('Postgres started'), config.pg.port)
+  console.log(`Portgres (${key}) started on ${instanceConfig.port}`)
   return client
 }
 
-module.exports = connect
+module.exports = async () => {
+  const keys = Object.keys(config.pg)
+  const o = {}
+  const promises = keys.map(key => connect(key).then(client => {
+    o[key] = client
+  }))
+  await Promise.all(promises)
+  console.log(chalk.green('Postgres instances started'))
+  return o
+}

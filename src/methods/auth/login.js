@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 
-const { keyTimeout } = require('../../../config.json').redis
+const config = require('../../../config.json')
 const db = require('../../db')
 const generateToken = require('../../utils/generateToken')
 
@@ -15,7 +15,7 @@ module.exports = async ({ auth }) => {
     }
   }
 
-  const { rows } = await db.pg.query({
+  const { rows } = await db.pg.main.query({
     text: SELECT_USER_QUERY,
     values: [auth.login],
   })
@@ -40,7 +40,8 @@ module.exports = async ({ auth }) => {
 
   const token = generateToken()
 
-  await db.redis.setexAsync(`user-session-${token}`, keyTimeout, row.id)
+  const { keyTimeout } = config.redis.sessions
+  await db.redis.sessions.setexAsync(`user-session-${token}`, keyTimeout, row.id)
   return {
     data: {
       token,

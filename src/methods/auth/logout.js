@@ -9,7 +9,7 @@ module.exports = async ({ auth }) => {
     }
   }
 
-  await db.redis.delAsync(`user-session-${auth.token}`)
+  await db.redis.sessions.delAsync(`user-session-${auth.token}`)
 
   return {
     data: {},

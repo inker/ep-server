@@ -29,7 +29,7 @@ module.exports = ({
     })
   }
 
-  const { rows } = await db.pg.query({
+  const { rows } = await db.pg.main.query({
     text: SELECT_PERMISSIONS_QUERY,
     values: [auth.login],
   })

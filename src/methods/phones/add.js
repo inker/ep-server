@@ -23,7 +23,7 @@ module.exports = async ({ data }) => {
   }
 
   try {
-    const { rows } = await db.pg.query({
+    const { rows } = await db.pg.main.query({
       text: INSERT_PHONE_NUMBER_QUERY,
       values: [phoneNumber],
     })

@@ -12,7 +12,7 @@ module.exports = async ({ data }) => {
   }
 
   const { phoneNumber } = data
-  const { rows } = await db.pg.query({
+  const { rows } = await db.pg.main.query({
     text: SELECT_PHONE_NUMBER_ID_QUERY,
     values: [phoneNumber],
   })

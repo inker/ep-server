@@ -3,13 +3,18 @@
     "port": 8881
   },
   "redis": {
-    "port": 6379,
-    "keyTimeout": 86400
+    "sessions": {
+      "port": 6379,
+      "keyTimeout": 86400
+    }
   },
   "pg": {
-    "port": 5432,
-    "user": "easypay-user",
-    "database": "easypay-db",
-    "password": "1111"
+    "main": {
+      "port": 5432,
+      "database": "easypay-db",
+      "user": "easypay-user",
+      "password": "1111",
+      "reconnectTimeout": 3000
+    }
   }
 }
