@@ -20,7 +20,6 @@ module.exports = async ({ auth }) => {
   }
 
   const redisUserId = await db.redis.sessions.getAsync(`user-session-${auth.token}`)
-  console.log(`user-session-${auth.token}`, redisUserId)
 
   const { rows } = await db.pg.main.query({
     text: SELECT_USER_ID_QUERY,

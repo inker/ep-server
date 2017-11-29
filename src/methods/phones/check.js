@@ -16,7 +16,6 @@ module.exports = async ({ data }) => {
     text: SELECT_PHONE_NUMBER_ID_QUERY,
     values: [phoneNumber],
   })
-  console.log('res', rows)
   return {
     data: {
       exists: rows.length > 0,

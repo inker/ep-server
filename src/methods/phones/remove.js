@@ -16,7 +16,7 @@ module.exports = async ({ data }) => {
     text: DELETE_PHONE_NUMBER_QUERY,
     values: [phoneNumber],
   })
-  console.log('res', rowCount)
+
   const sentData = {}
   if (rowCount > 0) {
     sentData.phoneNumber = phoneNumber
