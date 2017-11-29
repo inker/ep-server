@@ -1,9 +1,10 @@
 const express = require('express')
+const path = require('path')
 
 const router = express.Router()
 
 function defineRoute(route, methodsPath) {
-  const method = require(`${methodsPath}/methods/${route}`)
+  const method = require(path.join(methodsPath, route))
   const cb = (req, res) =>
     method(req.body).then(resData => {
       res.send(resData)

@@ -1,6 +1,7 @@
 process.env.TZ = 'Europe/Moscow'
 
 const http = require('http')
+const path = require('path')
 const express = require('express')
 const compression = require('compression')
 const bodyParser = require('body-parser')
@@ -42,7 +43,7 @@ app.use(permissions({
   exemptServices: 'auth',
 }))
 
-app.use(router(routes, __dirname))
+app.use(router(routes, path.join(__dirname, 'methods')))
 
 app.use(express.static(`${__dirname}/client`))
 
