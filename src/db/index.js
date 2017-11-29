@@ -15,7 +15,7 @@ exports.start = async () => {
     const storagePromises = entries.map(async ([key, options]) => {
       const instance = await require(`./${storageName}`)(options)
       o[key] = instance
-      console.log(chalk.cyan(`${storageName} (${key}) started on ${options.port}`))
+      console.log(chalk.cyan(`Connected to ${storageName} (${key}) running on ${options.host || 'localhost'}:${options.port}`))
     })
     return Promise.all(storagePromises).then(() => {
       exports[storageName] = o
