@@ -3,6 +3,14 @@ const path = require('path')
 
 const router = express.Router()
 
+function sendServerError(res) {
+  res.send({
+    error: {
+      type: 'SERVER_ERROR',
+    },
+  })
+}
+
 function defineRoute(route, methodsPath) {
   const method = require(path.join(methodsPath, route))
   const cb = (req, res) =>
@@ -10,11 +18,7 @@ function defineRoute(route, methodsPath) {
       res.send(resData)
     }).catch(err => {
       console.error(err)
-      res.send({
-        error: {
-          type: 'SERVER_ERROR',
-        },
-      })
+      sendServerError(res)
     })
   router.post(route, cb)
 }
