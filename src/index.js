@@ -50,6 +50,6 @@ const server = http.createServer(app)
 
 db.start().then(() => {
   server.listen(port, () => {
-    console.log(chalk.green('Server is running'), port)
+    console.log(chalk.green(`Server is running on ${port}`))
   })
 }).catch(console.error)
