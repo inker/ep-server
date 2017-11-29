@@ -2,23 +2,21 @@ const db = require('../../db')
 
 const SELECT_USER_ID_QUERY = 'SELECT id FROM users WHERE username = $1;'
 
-module.exports = async (req, res) => {
-  const { auth } = req.body
-
+module.exports = async ({ auth }) => {
   if (!auth) {
-    return res.send({
+    return {
       error: {
         type: 'NO_AUTH',
       },
-    })
+    }
   }
 
   if (!auth.token) {
-    return res.send({
+    return {
       error: {
         type: 'INVALID_TOKEN',
       },
-    })
+    }
   }
 
   try {
@@ -31,21 +29,21 @@ module.exports = async (req, res) => {
     })
     const pgUserId = rows[0].id.toString()
     if (!redisUserId || redisUserId !== pgUserId) {
-      return res.send({
+      return {
         error: {
           type: 'INVALID_TOKEN',
         },
-      })
+      }
     }
   } catch (err) {
-    return res.send({
+    return {
       error: {
         type: 'SERVER_ERROR',
       },
-    })
+    }
   }
 
-  res.send({
+  return {
     data: {},
-  })
+  }
 }

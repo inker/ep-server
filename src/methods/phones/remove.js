@@ -2,15 +2,14 @@ const db = require('../../db')
 
 const DELETE_PHONE_NUMBER_QUERY = 'DELETE FROM phone_numbers WHERE phone_numbers.number = $1;'
 
-module.exports = async (req, res) => {
-  const { data } = req.body
+module.exports = async ({ data }) => {
   try {
     if (!data || !data.phoneNumber) {
-      return res.send({
+      return {
         error: {
           type: 'PHONE_NUMBER_REQUIRED',
         },
-      })
+      }
     }
 
     const { phoneNumber } = data
@@ -23,15 +22,15 @@ module.exports = async (req, res) => {
     if (rowCount > 0) {
       sentData.phoneNumber = phoneNumber
     }
-    res.send({
+    return {
       data: sentData,
-    })
+    }
   } catch (err) {
     console.error(err)
-    return res.send({
+    return {
       error: {
         type: 'SERVER_ERROR',
       },
-    })
+    }
   }
 }

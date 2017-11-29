@@ -6,15 +6,13 @@ const generateToken = require('../../utils/generateToken')
 
 const SELECT_USER_QUERY = 'SELECT * FROM users WHERE username = $1;'
 
-module.exports = async (req, res) => {
-  const { auth } = req.body
-
+module.exports = async ({ auth }) => {
   if (!auth) {
-    return res.send({
+    return {
       error: {
         type: 'NO_AUTH',
       },
-    })
+    }
   }
 
   try {
@@ -23,38 +21,38 @@ module.exports = async (req, res) => {
       values: [auth.login],
     })
     if (rows.length === 0) {
-      return res.send({
+      return {
         error: {
           type: 'NO_SUCH_USER',
         },
-      })
+      }
     }
 
     const row = rows[0]
 
     const passwordIsCorrect = await bcrypt.compare(auth.password, row.password)
     if (!passwordIsCorrect) {
-      return res.send({
+      return {
         error: {
           type: 'INCORRECT_PASSWORD',
         },
-      })
+      }
     }
 
     const token = generateToken()
 
     await db.redis.setexAsync(`user-session-${token}`, keyTimeout, row.id)
-    res.send({
+    return {
       data: {
         token,
       },
-    })
+    }
   } catch (err) {
     console.error(err)
-    return res.send({
+    return {
       error: {
         type: 'SERVER_ERROR',
       },
-    })
+    }
   }
 }

@@ -4,24 +4,22 @@ const db = require('../../db')
 
 const INSERT_PHONE_NUMBER_QUERY = 'INSERT INTO phone_numbers (number) VALUES ($1) RETURNING *;'
 
-module.exports = async (req, res) => {
-  const { data } = req.body
-
+module.exports = async ({ data }) => {
   if (!data || !data.phoneNumber) {
-    return res.send({
+    return {
       error: {
         type: 'PHONE_NUMBER_REQUIRED',
       },
-    })
+    }
   }
 
   const { phoneNumber } = data
   if (!isMobilePhone(phoneNumber, 'any')) {
-    return res.send({
+    return {
       error: {
         type: 'INVALID_PHONE_NUMBER',
       },
-    })
+    }
   }
 
   try {
@@ -30,26 +28,26 @@ module.exports = async (req, res) => {
       values: [phoneNumber],
     })
 
-    res.send({
+    return {
       data: {
         phoneNumber: rows[0].number,
       },
-    })
+    }
   } catch (err) {
     console.error(err)
     if (err.code === '23505') {
-      return res.send({
+      return {
         error: {
           type: 'ALREADY_EXISTS',
           message: 'Phone number already exists',
         },
-      })
+      }
     }
 
-    return res.send({
+    return {
       error: {
         type: 'SERVER_ERROR',
       },
-    })
+    }
   }
 }

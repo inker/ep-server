@@ -2,15 +2,14 @@ const db = require('../../db')
 
 const SELECT_PHONE_NUMBER_ID_QUERY = 'SELECT id FROM phone_numbers WHERE phone_numbers.number = $1;'
 
-module.exports = async (req, res) => {
-  const { data } = req.body
+module.exports = async ({ data }) => {
   try {
     if (!data || !data.phoneNumber) {
-      return res.send({
+      return {
         error: {
           type: 'PHONE_NUMBER_REQUIRED',
         },
-      })
+      }
     }
 
     const { phoneNumber } = data
@@ -19,17 +18,17 @@ module.exports = async (req, res) => {
       values: [phoneNumber],
     })
     console.log('res', rows)
-    res.send({
+    return {
       data: {
         exists: rows.length > 0,
       },
-    })
+    }
   } catch (err) {
     console.error(err)
-    return res.send({
+    return {
       error: {
         type: 'SERVER_ERROR',
       },
-    })
+    }
   }
 }
