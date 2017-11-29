@@ -15,7 +15,7 @@ module.exports = ({
   exemptServices,
 } = {}) => async (req, res, next) => {
   const { auth } = req.body
-  if (!auth) {
+  if (!auth || typeof auth !== 'object') {
     return res.send({
       error: {
         type: 'NO_AUTH',
