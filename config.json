@@ -11,7 +11,7 @@
   "pg": {
     "main": {
       "port": 5432,
-      "database": "easypay-db",
+      "database": "easypay-db-2",
       "user": "easypay-user",
       "password": "1111",
       "reconnectTimeout": 3000
