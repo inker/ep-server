@@ -7,7 +7,9 @@ module.exports = async (req, res) => {
   try {
     if (!data || !data.phoneNumber) {
       return res.send({
-        error: 'PHONE_NUMBER_REQUIRED',
+        error: {
+          type: 'PHONE_NUMBER_REQUIRED',
+        },
       })
     }
 
@@ -27,7 +29,9 @@ module.exports = async (req, res) => {
   } catch (err) {
     console.error(err)
     return res.send({
-      error: 'SERVER_ERROR',
+      error: {
+        type: 'SERVER_ERROR',
+      },
     })
   }
 }

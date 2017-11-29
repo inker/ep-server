@@ -21,7 +21,9 @@ module.exports = ({
 
   if (!auth) {
     return res.send({
-      error: 'NO_AUTH',
+      error: {
+        type: 'NO_AUTH',
+      },
     })
   }
 
@@ -34,7 +36,9 @@ module.exports = ({
 
   if (!permissions.includes(req.path)) {
     return res.send({
-      error: 'ACCESS_DENIED',
+      error: {
+        type: 'ACCESS_DENIED',
+      },
     })
   }
 

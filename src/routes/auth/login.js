@@ -10,7 +10,9 @@ module.exports = async (req, res) => {
 
   if (!auth) {
     return res.send({
-      error: 'NO_AUTH',
+      error: {
+        type: 'NO_AUTH',
+      },
     })
   }
 
@@ -21,7 +23,9 @@ module.exports = async (req, res) => {
     })
     if (rows.length === 0) {
       return res.send({
-        error: 'NO_SUCH_USER',
+        error: {
+          type: 'NO_SUCH_USER',
+        },
       })
     }
 
@@ -31,7 +35,9 @@ module.exports = async (req, res) => {
     const passwordIsCorrect = await bcrypt.compare(auth.password, row.password)
     if (!passwordIsCorrect) {
       return res.send({
-        error: 'INCORRECT_PASSWORD',
+        error: {
+          type: 'INCORRECT_PASSWORD',
+        },
       })
     }
 
@@ -46,7 +52,9 @@ module.exports = async (req, res) => {
   } catch (err) {
     console.error(err)
     return res.send({
-      error: 'SERVER_ERROR',
+      error: {
+        type: 'SERVER_ERROR',
+      },
     })
   }
 }

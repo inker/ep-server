@@ -7,13 +7,17 @@ module.exports = async (req, res) => {
 
   if (!auth) {
     return res.send({
-      error: 'NO_AUTH',
+      error: {
+        type: 'NO_AUTH',
+      },
     })
   }
 
   if (!auth.token) {
     return res.send({
-      error: 'INVALID_TOKEN',
+      error: {
+        type: 'INVALID_TOKEN',
+      },
     })
   }
 
@@ -28,12 +32,16 @@ module.exports = async (req, res) => {
     const pgUserId = rows[0].id.toString()
     if (!redisUserId || redisUserId !== pgUserId) {
       return res.send({
-        error: 'INVALID_TOKEN',
+        error: {
+          type: 'INVALID_TOKEN',
+        },
       })
     }
   } catch (err) {
     return res.send({
-      error: 'SERVER_ERROR',
+      error: {
+        type: 'SERVER_ERROR',
+      },
     })
   }
 

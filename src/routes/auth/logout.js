@@ -5,7 +5,9 @@ module.exports = async (req, res) => {
 
   if (!auth) {
     return res.send({
-      error: 'NO_AUTH',
+      error: {
+        type: 'NO_AUTH',
+      },
     })
   }
 
@@ -14,7 +16,9 @@ module.exports = async (req, res) => {
   } catch (err) {
     console.error(err)
     return res.send({
-      error: 'SERVER_ERROR',
+      error: {
+        type: 'SERVER_ERROR',
+      },
     })
   }
 
