@@ -45,8 +45,6 @@ app.use(permissions({
 
 app.use(router(routes, path.join(__dirname, 'methods')))
 
-app.use(express.static(`${__dirname}/client`))
-
 const server = http.createServer(app)
 
 db.start().then(() => {
