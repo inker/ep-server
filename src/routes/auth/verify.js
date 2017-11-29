@@ -1,9 +1,16 @@
 const db = require('../../db')
 
-const SELECT_USER_ID_QUERY = 'SELECT id FROM users WHERE username=$1'
+const SELECT_USER_ID_QUERY = 'SELECT id FROM users WHERE username = $1;'
 
 module.exports = async (req, res) => {
   const { auth } = req.body
+
+  if (!auth) {
+    return res.send({
+      error: 'NO_AUTH',
+    })
+  }
+
   if (!auth.token) {
     return res.send({
       error: 'INVALID_TOKEN',

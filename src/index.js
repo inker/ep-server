@@ -8,7 +8,8 @@ const chalk = require('chalk').default
 
 const { port } = require('../config.json').server
 
-const logger = require('./middlewares/logger')
+const logger = require('./middleware/logger')
+const permissions = require('./middleware/permissions')
 
 const db = require('./db')
 
@@ -24,6 +25,9 @@ app.use(bodyParser.json()) // to support JSON-encoded bodies
 app.use(cors())
 
 app.use(logger())
+app.use(permissions({
+  exemptServices: 'auth',
+}))
 
 app.use('/auth', require('./routes/auth'))
 app.use('/phones', require('./routes/phones'))

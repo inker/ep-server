@@ -5,7 +5,7 @@ const db = require('../../db')
 const INSERT_PHONE_NUMBER_QUERY = 'INSERT INTO phone_numbers (number) VALUES ($1);'
 
 module.exports = async (req, res) => {
-  const { auth, data } = req.body
+  const { data } = req.body
   try {
     if (!data || !data.phoneNumber) {
       return res.send({

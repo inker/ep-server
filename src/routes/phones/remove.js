@@ -1,9 +1,9 @@
 const db = require('../../db')
 
-const DELETE_PHONE_NUMBER_QUERY = 'DELETE FROM phone_numbers WHERE phone_numbers.number=$1;'
+const DELETE_PHONE_NUMBER_QUERY = 'DELETE FROM phone_numbers WHERE phone_numbers.number = $1;'
 
 module.exports = async (req, res) => {
-  const { auth, data } = req.body
+  const { data } = req.body
   try {
     if (!data || !data.phoneNumber) {
       return res.send({

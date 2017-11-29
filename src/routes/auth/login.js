@@ -3,10 +3,17 @@ const bcrypt = require('bcrypt')
 const db = require('../../db')
 const generateToken = require('../../utils/generateToken')
 
-const SELECT_USER_QUERY = 'SELECT * FROM users WHERE username=$1'
+const SELECT_USER_QUERY = 'SELECT * FROM users WHERE username = $1;'
 
 module.exports = async (req, res) => {
   const { auth } = req.body
+
+  if (!auth) {
+    return res.send({
+      error: 'NO_AUTH',
+    })
+  }
+
   try {
     const { rows } = await db.pg.query({
       text: SELECT_USER_QUERY,

@@ -1,9 +1,9 @@
 const db = require('../../db')
 
-const SELECT_PHONE_NUMBER_ID_QUERY = 'SELECT id FROM phone_numbers WHERE phone_numbers.number=$1;'
+const SELECT_PHONE_NUMBER_ID_QUERY = 'SELECT id FROM phone_numbers WHERE phone_numbers.number = $1;'
 
 module.exports = async (req, res) => {
-  const { auth, data } = req.body
+  const { data } = req.body
   try {
     if (!data || !data.phoneNumber) {
       return res.send({
