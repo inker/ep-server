@@ -3,7 +3,8 @@
     "port": 8881
   },
   "redis": {
-    "port": 6379
+    "port": 6379,
+    "keyTimeout": 86400
   },
   "pg": {
     "port": 5432,
