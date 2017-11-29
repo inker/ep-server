@@ -14,11 +14,11 @@ exports.start = async () => {
   const promises = storages.map(storageName => {
     const o = {}
     const storage = config[storageName]
-    const entries = Object.entries(storage)
-    const storagePromises = entries.map(async ([key, options]) => {
+    const storagePromises = Object.entries(storage).map(async ([key, options]) => {
       const instance = await require(`./${storageName}`)(options)
       o[key] = instance
-      console.log(chalk.cyan(`Connected to ${storageName} (${key}) running on ${options.host || 'localhost'}:${options.port}`))
+      const host = options.host || 'localhost'
+      console.log(chalk.cyan(`Connected to ${storageName} (${key}) running on ${host}:${options.port}`))
     })
     return Promise.all(storagePromises).then(() => {
       exports[storageName] = o
