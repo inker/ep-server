@@ -19,6 +19,12 @@ module.exports = ({
 
   const { auth } = req.body
 
+  if (!auth) {
+    return res.send({
+      error: 'NO_AUTH',
+    })
+  }
+
   const { rows } = await db.pg.query({
     text: SELECT_PERMISSIONS_QUERY,
     values: [auth.login],
