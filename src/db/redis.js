@@ -6,8 +6,9 @@ bluebird.promisifyAll(redis.Multi.prototype)
 
 module.exports = (options) =>
   new Promise((resolve, reject) => {
-    const { port } = options
+    const { host, port } = options
     const client = redis.createClient({
+      host,
       port,
     })
     client.on('error', reject)

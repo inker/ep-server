@@ -4,12 +4,14 @@
   },
   "redis": {
     "sessions": {
+      "host": "localhost",
       "port": 6379,
       "keyTimeout": 86400
     }
   },
   "pg": {
     "main": {
+      "host": "localhost",
       "port": 5432,
       "database": "easypay-db-2",
       "user": "easypay-user",
